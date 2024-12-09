@@ -7,8 +7,13 @@ public class IdentifierTest {
     private final Identifier identifier = new Identifier();
 
     @Test
-    public void caracteresEspeciaisInvalidos() {
-        assertFalse( "Identificadores com caracteres especiais devem ser inválidos", identifier.validateIdentifier("te.ste"));
+    public void minimoUmCaracteresInvalido() {
+        assertTrue( "Identificadores com no mínimo de 1 caractere devem ser válidos", identifier.validateIdentifier("a"));
+    }
+
+    @Test
+    public void maximoSeisCaracteresValido() {
+        assertTrue( "Identificadores com até 6 caracteres devem ser válidos", identifier.validateIdentifier("abc123"));
     }
 
     @Test
@@ -17,22 +22,17 @@ public class IdentifierTest {
     }
 
     @Test
-    public void minimoUmCaracteresInvalido() {
-        assertTrue( "Identificadores com no mínimo de 1 caractere devem ser válidos", identifier.validateIdentifier("y"));
+    public void acimaDoLimiteCaracteresInvalido() {
+        assertFalse("Identificadores com mais de 6 caracteres devem ser inválidos", identifier.validateIdentifier("abcdef1"));
     }
 
     @Test
-    public void maximoSeisCaracteresValido() {
-        assertTrue( "Identificadores com até 6 caracteres devem ser válidos", identifier.validateIdentifier("yasmin"));
+    public void comecaComNumeroInvalido() {
+        assertFalse("O primeiro caractere não pode ser um número, logo o identificador deve ser inválido", identifier.validateIdentifier("1abc"));
     }
 
     @Test
-    public void maximoSeisCaracteresInvalido() {
-        assertFalse("Identificadores com mais de 6 caracteres devem ser inválidos", identifier.validateIdentifier("alskndalksndksa"));
-    }
-
-    @Test
-    public void primeiroCaractereNaoENumeroInvalido() {
-        assertFalse("O primeiro caractere não pode ser um número, logo o identificador deve ser inválido", identifier.validateIdentifier("9an"));
+    public void caracteresEspeciaisInvalidos() {
+        assertFalse( "Identificadores com caracteres especiais devem ser inválidos", identifier.validateIdentifier("abc!"));
     }
 }
